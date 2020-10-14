@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/1.0" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Definitions_Next_Page" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="3.7.0">
+  <decision id="Decision_1" name="Decision 1">
+    <extensionElements>
+      <biodi:bounds x="157" y="81" width="180" height="80" />
+    </extensionElements>
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="First Name" camunda:inputVariable="firstName">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="Next Page" name="nextPage" typeRef="string" />
+      <rule id="DecisionRule_1t0j4rx">
+        <inputEntry id="UnaryTests_0sq8v6f">
+          <text>"bunyawat"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0y31fni">
+          <text>"page_b"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1v8sr38">
+        <inputEntry id="UnaryTests_04i29i8">
+          <text>"waraporn"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qre6kt">
+          <text>"page_b"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

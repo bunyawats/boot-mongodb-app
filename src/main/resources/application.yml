@@ -1,0 +1,34 @@
+camunda:
+    bpm:
+        auto-deployment-enabled: true
+        deployment-resource-pattern: /dmn/*.dmn, /bpmn/*.bpmn
+        filter:
+            create: show all
+logging:
+    level:
+        com:
+#            zaxxer:
+#                hikari: TRACE
+#                hikari.HikariConfig: DEBUG
+        root: INFO
+management:
+    endpoint:
+        health:
+            show-details: always
+server:
+    port: 8081
+spring:
+    data:
+        mongodb:
+            database: mydatabase
+            host: localhost
+            port: 27017
+    datasource:
+        hikari:
+            connection-test-query: SELECT 1
+            connectionTimeout: 30000
+            idleTimeout: 600000
+            maxLifetime: 1800000
+        password: camunda
+        url: jdbc:mysql://localhost:3306/camunda
+        username: camunda

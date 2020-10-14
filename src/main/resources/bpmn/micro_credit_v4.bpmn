@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_ll67ABGYEeW7xqkBzIjHqw" targetNamespace="http://camunda.org/schema/1.0/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="MICRO_CREDIT_V4" name="Micro Credit (v4)" isExecutable="true" camunda:versionTag="V4">
+    <bpmn2:extensionElements>
+      <camunda:properties>
+        <camunda:property />
+      </camunda:properties>
+    </bpmn2:extensionElements>
+    <bpmn2:startEvent id="StartEvent_1">
+      <bpmn2:outgoing>Flow_15pz28r</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:serviceTask id="ServiceTask_1" name="say hello" camunda:async="true" camunda:delegateExpression="${sayHelloDelegate}">
+      <bpmn2:incoming>Flow_06681lc</bpmn2:incoming>
+      <bpmn2:incoming>Flow_1o0sq3p</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:endEvent id="EndEvent_1">
+      <bpmn2:extensionElements>
+        <camunda:executionListener delegateExpression="${notifyClientDelegate}" event="start" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1" />
+    <bpmn2:userTask id="PAGE_B" name="Page B" camunda:formKey="FORM_B">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="jobTitle" label="Job Title" type="string" />
+          <camunda:formField id="companyName" label="Company Name" type="string" />
+          <camunda:formField id="companyAddress" label="Company Address" type="string" />
+          <camunda:formField id="companyDistrict" label="Company District" type="string" />
+          <camunda:formField id="companyProvince" label="Company Province" type="string" />
+          <camunda:formField id="companyPostcode" label="Company Postcode" type="string" />
+        </camunda:formData>
+        <camunda:executionListener delegateExpression="${notifyClientDelegate}" event="start" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>IS_BUNYAWAT</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1o0sq3p</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="PAGE_A" name="Page A" camunda:formKey="FORM_A">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="firstName" label="First Name" type="string" />
+          <camunda:formField id="lastName" label="Last Name" type="string" />
+          <camunda:formField id="salary" label="Salary" type="long" />
+          <camunda:formField id="dob" label="DOB" type="date" />
+          <camunda:formField id="marriage" label="Marriage" type="boolean" />
+          <camunda:formField id="taxAmount" label="Tax Amount" type="double" />
+        </camunda:formData>
+        <camunda:executionListener delegateExpression="${notifyClientDelegate}" event="start" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_0xjy0b0</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" sourceRef="PAGE_A" targetRef="Task_0h5gt0l" />
+    <bpmn2:serviceTask id="Task_0h5gt0l" name="say good bye" camunda:asyncBefore="true" camunda:delegateExpression="${sayGoodByeDelegate}">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_1a6bgnh</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:userTask id="PAGE_C" name="Page C" camunda:formKey="FORM_C">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="homeAddress" label="Home Address" type="string" />
+          <camunda:formField id="homeDistrict" label="Home District" type="string" />
+          <camunda:formField id="homeProvince" label="Home Province" type="string" />
+          <camunda:formField id="homePostcode" label="Home Postcode" type="string" />
+        </camunda:formData>
+        <camunda:executionListener delegateExpression="${notifyClientDelegate}" event="start" />
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>NOT_BUNYAWAT</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_06681lc</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="Flow_0smk87y" sourceRef="Activity_1ke3sdo" targetRef="Gateway_X" />
+    <bpmn2:sequenceFlow id="IS_BUNYAWAT" name="is bunyawat" sourceRef="Gateway_X" targetRef="PAGE_B">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${  nextPage == 'page_b' }</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="NOT_BUNYAWAT" name="not bunyawat" sourceRef="Gateway_X" targetRef="PAGE_C" />
+    <bpmn2:sequenceFlow id="Flow_06681lc" sourceRef="PAGE_C" targetRef="ServiceTask_1" />
+    <bpmn2:sequenceFlow id="Flow_1o0sq3p" sourceRef="PAGE_B" targetRef="ServiceTask_1" />
+    <bpmn2:exclusiveGateway id="Gateway_X" default="NOT_BUNYAWAT">
+      <bpmn2:incoming>Flow_0smk87y</bpmn2:incoming>
+      <bpmn2:outgoing>IS_BUNYAWAT</bpmn2:outgoing>
+      <bpmn2:outgoing>NOT_BUNYAWAT</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="Flow_1a6bgnh" sourceRef="Task_0h5gt0l" targetRef="Activity_1ke3sdo" />
+    <bpmn2:businessRuleTask id="Activity_1ke3sdo" camunda:resultVariable="nextPage" camunda:decisionRef="Decision_1" camunda:mapDecisionResult="singleEntry">
+      <bpmn2:incoming>Flow_1a6bgnh</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0smk87y</bpmn2:outgoing>
+    </bpmn2:businessRuleTask>
+    <bpmn2:sequenceFlow id="Flow_15pz28r" sourceRef="StartEvent_1" targetRef="Pause_Activity" />
+    <bpmn2:sequenceFlow id="Flow_0xjy0b0" sourceRef="Pause_Activity" targetRef="PAGE_A" />
+    <bpmn2:userTask id="Pause_Activity" name="Pause">
+      <bpmn2:extensionElements>
+        <camunda:executionListener event="start">
+          <camunda:script scriptFormat="groovy">println "Start Pause Task"</camunda:script>
+        </camunda:executionListener>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_15pz28r</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0xjy0b0</bpmn2:outgoing>
+    </bpmn2:userTask>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="MICRO_CREDIT_V4">
+      <bpmndi:BPMNEdge id="Flow_1a6bgnh_di" bpmnElement="Flow_1a6bgnh">
+        <di:waypoint x="640" y="250" />
+        <di:waypoint x="680" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o0sq3p_di" bpmnElement="Flow_1o0sq3p">
+        <di:waypoint x="1050" y="160" />
+        <di:waypoint x="1050" y="240" />
+        <di:waypoint x="1170" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_06681lc_di" bpmnElement="Flow_06681lc">
+        <di:waypoint x="1050" y="360" />
+        <di:waypoint x="1050" y="260" />
+        <di:waypoint x="1170" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14txh49_di" bpmnElement="NOT_BUNYAWAT">
+        <di:waypoint x="925" y="275" />
+        <di:waypoint x="925" y="400" />
+        <di:waypoint x="1000" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="907" y="335" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r1zsyo_di" bpmnElement="IS_BUNYAWAT">
+        <di:waypoint x="925" y="225" />
+        <di:waypoint x="925" y="120" />
+        <di:waypoint x="990" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="911" y="170" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0smk87y_di" bpmnElement="Flow_0smk87y">
+        <di:waypoint x="780" y="250" />
+        <di:waypoint x="900" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2">
+        <di:waypoint x="500" y="250" />
+        <di:waypoint x="540" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ServiceTask_2" targetElement="_BPMNShape_EndEvent_3">
+        <di:waypoint x="1270" y="250" />
+        <di:waypoint x="1382" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15pz28r_di" bpmnElement="Flow_15pz28r">
+        <di:waypoint x="188" y="250" />
+        <di:waypoint x="250" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xjy0b0_di" bpmnElement="Flow_0xjy0b0">
+        <di:waypoint x="350" y="250" />
+        <di:waypoint x="400" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_2" bpmnElement="ServiceTask_1">
+        <dc:Bounds x="1170" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_3" bpmnElement="EndEvent_1">
+        <dc:Bounds x="1382" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0a6j47f_di" bpmnElement="PAGE_B">
+        <dc:Bounds x="990" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_3" bpmnElement="PAGE_A">
+        <dc:Bounds x="400" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_143mq1j_di" bpmnElement="Task_0h5gt0l">
+        <dc:Bounds x="540" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0huwuik_di" bpmnElement="PAGE_C">
+        <dc:Bounds x="1000" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_09sxkt5_di" bpmnElement="Gateway_X" isMarkerVisible="true">
+        <dc:Bounds x="900" y="225" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18cyf46_di" bpmnElement="Activity_1ke3sdo">
+        <dc:Bounds x="680" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="232" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0cqn2h9_di" bpmnElement="Pause_Activity">
+        <dc:Bounds x="250" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
